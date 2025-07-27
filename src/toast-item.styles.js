@@ -3,83 +3,108 @@ import { css } from "lit";
 export const toastItemStyles = css`
   :host {
     display: block;
-    background: white;
-    border: 1px solid #e1e5e9;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    margin-bottom: 8px;
-    min-width: 356px;
-    transition: all 300ms ease;
-    transform: translateX(0);
-    opacity: 1;
-    pointer-events: auto;
     position: relative;
-    overflow: hidden;
+    width: 270px; /* 300 - 30px */
+    background: white;
+    border: 1px solid black;
+    padding: 12px 16px;
+    margin-top: 12px;
+    /* margin 애니메이션은 hover 시 사용할 수 있음 */
+    transition: margin 0.3s ease;
+    /* z-index 음수는 위험, 기본 혹은 0 이상으로 */
+    z-index: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: Pretendard;
+    font-size: 0.85rem;
+    opacity: 1;
+    /* fadein 애니메이션은 상황에 맞게 필요하면 유지 */
+    animation: none;
   }
 
-  /* Fade in animation */
-  :host([fadein]) {
-    transform: translateX(100%);
-    opacity: 0;
+  :host(.expanded) {
+    margin-top: 12px; /* hover 시 간격 벌리기 */
+    z-index: 10;
   }
 
-  /* Exit animation */
+  :host([fadeIn]) {
+    animation: fadein 0.5s ease forwards;
+  }
+
   :host([exiting]) {
-    transform: translateX(100%);
-    opacity: 0;
+    animation: fadeout 0.5s ease forwards;
   }
 
-  /* Exit up animation */
   :host([exitup]) {
-    transform: translateY(-100%);
-    opacity: 0;
+    animation: fadeout-up 1s ease forwards;
   }
 
-  /* Toast type colors */
+  /* 타입별 색상 */
+  :host([type="default"]) {
+    background: white;
+    border: 1px solid #ccc;
+    color: #333;
+  }
+
   :host([type="success"]) {
-    border-left: 4px solid #22c55e;
-  }
-
-  :host([type="error"]) {
-    border-left: 4px solid #ef4444;
-  }
-
-  :host([type="warn"]) {
-    border-left: 4px solid #f59e0b;
+    background: #e6ffed;
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
   }
 
   :host([type="info"]) {
-    border-left: 4px solid #3b82f6;
+    background: #eaf6ff;
+    border: 1px solid #3498db;
+    color: #3498db;
+  }
+
+  :host([type="warn"]) {
+    background: #fff8e6;
+    border: 1px solid #f39c12;
+    color: #f39c12;
+  }
+
+  :host([type="error"]) {
+    background: #ffeaea;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeout {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(90px);
+    }
+  }
+
+  @keyframes fadeout-up {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-90px);
+    }
   }
 
   .toast-message {
-    font-size: 14px;
-    line-height: 1.4;
-    color: #1f2937;
+    white-space: pre-wrap; /* 줄바꿈 및 공백 유지 */
     word-wrap: break-word;
-  }
-
-  /* Hover states */
-  :host(.expanded) {
-    transform: scale(1.02);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
-
-  /* Type-specific icon colors (if we add icons later) */
-  :host([type="success"]) .toast-icon {
-    color: #22c55e;
-  }
-
-  :host([type="error"]) .toast-icon {
-    color: #ef4444;
-  }
-
-  :host([type="warn"]) .toast-icon {
-    color: #f59e0b;
-  }
-
-  :host([type="info"]) .toast-icon {
-    color: #3b82f6;
+    -webkit-line-clamp: 2; /* 최대 2줄 */
   }
 `;

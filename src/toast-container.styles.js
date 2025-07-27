@@ -4,65 +4,50 @@ export const toastContainerStyles = css`
   :host {
     position: fixed;
     z-index: 9999;
-    pointer-events: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    width: 300px;
+    min-height: 50px;
+    /* background: rgba(255, 0, 0, 0.3); */
+    padding-bottom: 2rem;
+    pointer-events: auto;
   }
 
-  /* Position styles */
   :host([position="top-right"]) {
-    top: 16px;
+    top: 0px;
     right: 16px;
+    align-items: flex-end;
   }
 
   :host([position="top-left"]) {
-    top: 16px;
+    top: 0px;
     left: 16px;
-  }
-
-  :host([position="top-center"]) {
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+    align-items: flex-start;
   }
 
   :host([position="bottom-right"]) {
-    bottom: 16px;
+    bottom: 0px;
     right: 16px;
+    align-items: flex-end;
   }
 
   :host([position="bottom-left"]) {
-    bottom: 16px;
+    bottom: 0px;
     left: 16px;
+    align-items: flex-start;
+  }
+
+  :host([position="top-center"]) {
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
   }
 
   :host([position="bottom-center"]) {
-    bottom: 16px;
+    bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
-  }
-
-  /* Container wrapper */
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    pointer-events: auto;
-  }
-
-  /* Toast items */
-  toast-item {
-    pointer-events: auto;
-  }
-
-  /* Stacked toast effect */
-  toast-item:not(:last-child) {
-    margin-bottom: -4px;
-  }
-
-  /* Hover effect for expanded state */
-  toast-item.expanded {
-    margin-bottom: 0;
+    align-items: center;
   }
 `;
