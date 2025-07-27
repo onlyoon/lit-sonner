@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lit Sonner Demo</title>
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        button.success {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        button.error {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+
+        button.warn {
+            background: #fefbf2;
+            border-color: #f59e0b;
+            color: #d97706;
+        }
+
+        button.info {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #2563eb;
+        }
+
+        .position-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .position-btn {
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .position-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section h2 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 Lit Sonner</h1>
+        <p class="subtitle">An opinionated toast component for Lit applications</p>
+
+        <div class="section">
+            <h2>Position Controls</h2>
+            <div class="position-controls">
+                <button class="position-btn active" data-position="top-right">Top Right</button>
+                <button class="position-btn" data-position="top-left">Top Left</button>
+                <button class="position-btn" data-position="top-center">Top Center</button>
+                <button class="position-btn" data-position="bottom-right">Bottom Right</button>
+                <button class="position-btn" data-position="bottom-left">Bottom Left</button>
+                <button class="position-btn" data-position="bottom-center">Bottom Center</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Basic Toasts</h2>
+            <div class="button-grid">
+                <button onclick="showBasicToast()">기본 Toast</button>
+                <button class="success" onclick="showSuccessToast()">성공 Toast</button>
+                <button class="error" onclick="showErrorToast()">에러 Toast</button>
+                <button class="warn" onclick="showWarnToast()">경고 Toast</button>
+                <button class="info" onclick="showInfoToast()">정보 Toast</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Multiple Toasts</h2>
+            <div class="button-grid">
+                <button onclick="showMultipleToasts()">여러 Toast 동시에</button>
+                <button onclick="showSequentialToasts()">순차적 Toast</button>
+                <button onclick="showLongMessage()">긴 메시지 Toast</button>
+                <button onclick="showMixedTypes()">다양한 타입 Toast</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { toast } from '../src/index.js';
+        
+        let currentPosition = 'top-right';
+
+        // Position control
+        document.querySelectorAll('.position-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.position-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentPosition = btn.dataset.position;
+            });
+        });
+
+        // Basic toast functions
+        window.showBasicToast = () => {
+            toast('안녕하세요! 기본 토스트입니다.', { position: currentPosition });
+        };
+
+        window.showSuccessToast = () => {
+            toast.success('성공적으로 처리되었습니다!', { position: currentPosition });
+        };
+
+        window.showErrorToast = () => {
+            toast.error('오류가 발생했습니다.', { position: currentPosition });
+        };
+
+        window.showWarnToast = () => {
+            toast.warn('주의가 필요합니다.', { position: currentPosition });
+        };
+
+        window.showInfoToast = () => {
+            toast.info('새로운 정보가 있습니다.', { position: currentPosition });
+        };
+
+        // Multiple toasts
+        window.showMultipleToasts = () => {
+            toast('첫 번째 메시지', { position: currentPosition });
+            toast.success('두 번째 메시지', { position: currentPosition });
+            toast.error('세 번째 메시지', { position: currentPosition });
+            toast.warn('네 번째 메시지', { position: currentPosition });
+            toast.info('다섯 번째 메시지', { position: currentPosition });
+        };
+
+        window.showSequentialToasts = () => {
+            toast('첫 번째...', { position: currentPosition });
+            setTimeout(() => toast.info('두 번째...', { position: currentPosition }), 500);
+            setTimeout(() => toast.success('완료!', { position: currentPosition }), 1000);
+        };
+
+        window.showLongMessage = () => {
+            toast('이것은 매우 긴 메시지입니다. 토스트 컴포넌트가 긴 텍스트를 어떻게 처리하는지 확인해보세요. 여러 줄로 표시될 수 있습니다.', { position: currentPosition });
+        };
+
+        window.showMixedTypes = () => {
+            const types = ['default', 'success', 'error', 'warn', 'info'];
+            const messages = [
+                '기본 메시지',
+                '성공 메시지',
+                '에러 메시지', 
+                '경고 메시지',
+                '정보 메시지'
+            ];
+
+            types.forEach((type, index) => {
+                setTimeout(() => {
+                    if (type === 'default') {
+                        toast(messages[index], { position: currentPosition });
+                    } else {
+                        toast[type](messages[index], { position: currentPosition });
+                    }
+                }, index * 200);
+            });
+        };
+    </script>
+</body>
+</html>

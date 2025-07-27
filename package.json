@@ -1,0 +1,36 @@
+{
+  "name": "lit-sonner",
+  "version": "1.0.0",
+  "description": "An opinionated toast component for Lit applications",
+  "type": "module",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "serve": "vite preview",
+    "test": "vitest",
+    "lint": "eslint src --ext js",
+    "format": "prettier --write src"
+  },
+  "keywords": [
+    "lit",
+    "toast",
+    "notification",
+    "sonner",
+    "web-components"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}
